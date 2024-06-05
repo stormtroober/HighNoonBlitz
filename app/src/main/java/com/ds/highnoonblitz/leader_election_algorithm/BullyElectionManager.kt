@@ -13,7 +13,7 @@ class BullyElectionManager(private val electionFunction: () -> Unit) {
     }
 
     private var electionList = mutableStateListOf<Pair<String, String>>()
-    private var electionTimer = OneShotTimer(5000L) {
+    private var electionTimer = OneShotTimer(8000L) {
         becomeCoordinator()
     }
 

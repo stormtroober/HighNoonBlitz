@@ -32,10 +32,11 @@ class BluetoothHandler(private val activity: MainActivity){
     fun onDeviceDisconnected(socket: BluetoothSocket) {
         deviceManager.removeSocket(socket)
         if(socket.remoteDevice.address == deviceManager.getMasterAddress().value){
-            val electionMessage = MessageFactory.createElectionMessage()
             deviceManager.startElection()
             for(deviceMac in deviceManager.getElectionList()){
                 val device = bluetoothAdapter.getRemoteDevice(deviceMac)
+                Log.d("DEBUG", device.name)
+                val electionMessage = MessageFactory.createElectionMessage()
                 sendMessage(electionMessage, device)
             }
         }

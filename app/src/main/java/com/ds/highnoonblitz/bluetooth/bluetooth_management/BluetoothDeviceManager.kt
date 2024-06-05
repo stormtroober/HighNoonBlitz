@@ -3,6 +3,7 @@ package com.ds.highnoonblitz.bluetooth.bluetooth_management
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -59,6 +60,7 @@ class BluetoothDeviceManager(private val electionManager: BullyElectionManager) 
     fun setMaster(value: Boolean){
         isLobbyMaster = value
     }
+
 
     fun isDeviceAlreadyConnected(device: BluetoothDevice): Boolean{
         return allConnectedSockets.any { pair -> pair.first.remoteDevice == device }

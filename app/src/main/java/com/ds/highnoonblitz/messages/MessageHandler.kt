@@ -12,6 +12,7 @@ import com.ds.highnoonblitz.bluetooth.BluetoothHandler
 import com.ds.highnoonblitz.bluetooth.communication_threads.Purposes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
@@ -88,13 +89,15 @@ class MessageHandler(private val activity: MainActivity, private val bluetoothHa
                     val message = MessageFactory.createAcknowledgeMessage()
                     val device = bluetoothHandler.getBluetoothAdapter()?.getRemoteDevice(senderMacAddress)
                     if (device != null) {
-                        bluetoothHandler.sendMessage(message, device)
-                    }
+                            bluetoothHandler.sendMessage(message, device)
+                        }
+
                 }
 
             }
 
             Purposes.ACK -> {
+                ToastMaker.makeToast("Received ACK")
                 backgroundScope.launch {
                     bluetoothHandler.getDeviceManager().stopElection()
                 }

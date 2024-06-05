@@ -1,6 +1,8 @@
 package com.ds.highnoonblitz.bluetooth.bluetooth_management
 
 import PermissionManager
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
@@ -21,15 +23,16 @@ class BluetoothClientManager(private val activity: MainActivity, private val blu
 ) {
     private var receiver: BroadcastReceiver? = null
 
+    @SuppressLint("MissingPermission")
     @RequiresApi(Build.VERSION_CODES.S)
     fun connectToDevice(deviceMac: String) {
-        val device = bluetoothAdapter.getRemoteDevice(deviceMac)
-        if(device == null){
-            Log.i("BluetoothClientManager", "Device is null")
+        if(BluetoothAdapter.checkBluetoothAddress(deviceMac)){
+            val device = bluetoothAdapter.getRemoteDevice(deviceMac)
+            connect(device)
         }
-        connect(device)
     }
 
+    @SuppressLint("MissingPermission")
     @RequiresApi(Build.VERSION_CODES.S)
     private fun connect(device: BluetoothDevice) {
         if (bluetoothAdapter.isEnabled && !deviceManager.isDeviceAlreadyConnected(device)) {
